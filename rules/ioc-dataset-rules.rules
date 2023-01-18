@@ -1,0 +1,5 @@
+########### IoC Dataset Test Rules ############# /etc/suricata/rules/ioc-dataset-rules.rules
+
+#alert dns any any -> any any (msg: "dns list test"; dns.query; to_sha256; dataset:isset,dns-ioc-alert-dataset.sha256; sid:1000003; rev:1;)
+alert dns any any -> any any (msg: "dns list test"; dns.query; dataset:set,dns-ioc-alert-dataset; sid:1000004; rev:1;)
+alert http any any -> any any (msg: "http user-agent test"; http.user_agent; dataset:set,dns-ioc-alert-dataset; sid:1000005; rev:1;)
