@@ -3,7 +3,7 @@
 # This script performs a CURL using API key for threat intel (with a bash environment variable) and stores the data from the API call to a unique filename, structured by a prepended string, followed by date and timestamps
 
 CURL=$(which curl)
-CURLARGS="-H \"X-RFToken: $RFAPITOKEN\" -f"
+CURLARGS="-H \"X-RFToken: $RFAPITOKEN\" -f -v"
 # OR 
 # CURLARGS="-H "X-RFToken: $RFAPITOKEN" -f -v -o iprisklist_$(date +"%Y_%m_%d_%H_%M_%S_%s").csv""
 # Enable the below statement by removing the comment and sniff the traffic for troubleshooting:
@@ -20,6 +20,6 @@ RFIPRISKLIST="https://api.recordedfuture.com/v2/ip/risklist?format=csv%2Fsplunk&
 # raw="$($CURL $CURLARGS $RFIPRISKLIST)"
 
 # or you can redirect it into a file:
-$CURL $CURLARGS $RFIPRISKLIST -f -v 
+$CURL $CURLARGS $RFIPRISKLIST 
 # When invoking the script in this method, you do not need the curl `-o` argument 
 #$CURL $CURLARGS $RFIPRISKLIST -f -v >> ./unparsed_iprisklist_$(date +"%Y_%m_%d_%H_%M_%S_%s").csv
