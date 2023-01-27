@@ -20,6 +20,6 @@ RFIPRISKLIST="https://api.recordedfuture.com/v2/ip/risklist?format=csv%2Fsplunk&
 # raw="$($CURL $CURLARGS $RFIPRISKLIST)"
 
 # or you can redirect it into a file:
-#$CURL $CURLARGS $RFIPRISKLIST -f -v 
+$CURL $CURLARGS $RFIPRISKLIST -f -v 
 # When invoking the script in this method, you do not need the curl `-o` argument 
 #$CURL $CURLARGS $RFIPRISKLIST -f -v >> ./unparsed_iprisklist_$(date +"%Y_%m_%d_%H_%M_%S_%s").csv
