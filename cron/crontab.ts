@@ -42,3 +42,5 @@
 # Run a simple script to convert the IoC's as IP addresses in Base64 and append them to the custom IoC dataset
 0 01,45 * * * 
 # 
+# "Suricata Native Housekeeping" will proceed the following morning (~23 hours) to restart Suricata service with the newly-loaded IoC's and datasets from "Development Scripts"
+# 
