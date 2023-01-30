@@ -19,13 +19,12 @@
 # 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
 #
 # For more information see the manual pages of crontab(5) and cron(8)
-#
+# m h  dom mon dow   command
 # To reload a brand new crontab (`crontab -r`)
 # 
 # Suricata Native Housekeeping:
 #
 # Reload Suricata Data Sources to dynamically update rulesets, including custom IoC's and datasets that are added by the below scripts
-# m h  dom mon dow   command
 0 0 * * * /usr/bin/suricata-update update-source; /usr/bin/suricata-update list-sources; /usr/bin/suricata-update; systemctl restart suricata; echo "Suricata updated" | /usr/bin/logger -t CRON
 #
 # Old Suricata Cron:
