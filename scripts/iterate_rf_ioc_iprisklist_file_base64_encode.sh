@@ -6,7 +6,7 @@
 for line in `cat /development/rf-ip-risklists/parsed-ip-risklists/iprisklist_rf_ip_risklist_ips_latest.txt`;
 do
 	echo $line | base64
-done > /etc/suricata/rules/domains_base64_rf_base64.lst
+done > /etc/suricata/rules/ipv4s_base64_rf_base64.lst
 
 # Invoke using the following example:
 # chmod +x <script.sh>
