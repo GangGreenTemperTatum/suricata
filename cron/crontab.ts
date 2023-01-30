@@ -20,6 +20,8 @@
 #
 # For more information see the manual pages of crontab(5) and cron(8)
 #
+# To reload a brand new crontab (`crontab -r`)
+# 
 # Suricata Native Housekeeping:
 #
 # Reload Suricata Data Sources to dynamically update rulesets, including custom IoC's and datasets that are added by the below scripts
@@ -31,16 +33,20 @@
 #30 0 * * * suricata-update
 #45 0 * * * systemctl restart suricata
 #
-# Development Scripts:
+##### Suricata Threatbus #####
+# 
+# 
+##### Development Scripts: #####
 #
 # Cleanup `eve.json` filesize to reduce danger of consuming too much filesystem capacity and resources
+# Script input argument is all files listed in `logs.txt` within same directory as the script
 0 01,15 * * * /development/suricata_cleanup_log_script.sh /var/log/suricata/ 10 /development/logs.txt
 #
-# Run the Python script to pull IoC's from Threat Intelligence feeds ($ which python3)
-0 01,30 * * * /usr/bin/python3 /development/rf-ip-risklists/rf_risklist_api_names_to_file.py >> /development/rf-ip-risklists/parsed-ip-risklists/iprisklist_$(date +"%Y_%m_%d_%H_%M_%S_%s").csv
+# Run the Python script to pull IoC's from Threat Intelligence feeds (`$ which python3`)
+0 23 * * * /usr/bin/python3 /development/rf-ip-risklists/rf_risklist_api_names_to_file.py >> /development/rf-ip-risklists/parsed-ip-risklists/iprisklist_$(date +"%Y_%m_%d_%H_%M_%S_%s").csv
 #
 # Run a simple script to convert the IoC's as IP addresses in Base64 and append them to the custom IoC dataset
-0 01,45 * * * 
+# 10 23 * * * 
 # 
-# "Suricata Native Housekeeping" will proceed the following morning (~23 hours) to restart Suricata service with the newly-loaded IoC's and datasets from "Development Scripts"
+# "Suricata Native Housekeeping" will proceed (~24 hours) to restart Suricata service with the newly-loaded IoC's and datasets from "Development Scripts"
 # 
