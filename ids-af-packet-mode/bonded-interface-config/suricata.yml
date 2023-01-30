@@ -1170,6 +1170,13 @@ datasets:
   dns-ioc-alert-dataset:
     type: string
     state: /etc/suricata/rules/domains_base64_threatfox_base64.lst
+  rf-ip-ioc-alert-dataset:
+    type: string
+    state: /etc/suricata/rules/ipv4s_base64_rf_base64.lst
+  rf-ip-ioc-alert-dataset:
+    type: string
+    state: /etc/suricata/rules/domains_base64_rf_base64.lst
+
   #dns-ioc-alert-dataset.sha256:
     #type: sha256
     #state: domains_sha_256_threatfox_base64.lst
