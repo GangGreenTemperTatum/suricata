@@ -46,9 +46,13 @@
 #
 # This cron entry is replacing the above line and instead of storing individual timestamped files, is storing them to a static file entry
 0 23 * * * /usr/bin/python3 /development/rf-ip-risklists/rf_risklist_api_names_to_file.py 1> /development/rf-ip-risklists/parsed-ip-risklists/iprisklist_rf_ip_risklist_ips_latest.txt 2> /development/rf-ip-risklists/parsed-ip-risklists/iprisklist_rf_ip_risklist_ips_latest_err_log_$(date +"%Y_%m_%d_%H_%M_%S_%s").log
+#  
+5 23 * * * /usr/bin/python3 /development/rf-ip-risklists/rf_domain_risklist_api_names.py 1> /development/rf-ip-risklists/parsed-domain-risklists/domainrisklist_rf_domain_risklist_domains_latest.txt 2> /development/rf-ip-risklists/parsed-domain-risklists/domainrisklist_rf_latest_err_log_$(date +"%Y_%m_%d_%H_%M_%S_%s").log
 # 
 # Run a simple script to convert the IoC's as IP addresses in Base64 and append them to the custom IoC dataset
 10 23 * * * /usr/bin/bash /development/rf-ip-risklists/parsed-ip-risklists/iterate_rf_ioc_iprisklist_file_base64_encode.sh 2> /development/rf-ip-risklists/parsed-ip-risklists/iprisklist_base64_encoding_err_log_$(date +"%Y_%m_%d_%H_%M_%S_%s").log
+#
+15 23 * * * /usr/bin/bash /development/rf-ip-risklists/parsed-domain-risklists/iterate_rf_ioc_domainrisklist_file_base64_encode.sh 2> /development/rf-ip-risklists/parsed-ip-risklists/parsed-domain-risklists/domainrisklist_base64_encoding_err_log_$(date +"%Y_%m_%d_%H_%M_%S_%s").log
 # 
 # "Suricata Native Housekeeping" will proceed (~24 hours) to restart Suricata service with the newly-loaded IoC's and datasets from "Development Scripts"
 # 
