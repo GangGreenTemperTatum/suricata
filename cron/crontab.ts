@@ -45,7 +45,7 @@
 #0 23 * * * /usr/bin/python3 /development/rf-ip-risklists/rf_risklist_api_names_to_file.py >> /development/rf-ip-risklists/parsed-ip-risklists/iprisklist_$(date +"%Y_%m_%d_%H_%M_%S_%s").csv
 #
 # This cron entry is replacing the above line and instead of storing individual timestamped files, is storing them to a static file entry
-0 23 * * * /usr/bin/python3 /development/rf-ip-risklists/rf_risklist_api_names_to_file.py 1> /development/rf-ip-risklists/parsed-ip-risklists/iprisklist_rf_ip_risklist_ips_latest.txt 2> /development/rf-ip-risklists/parsed-ip-risklists/iprisklist_rf_ip_risklist_ips_latest_err_log.log
+0 23 * * * /usr/bin/python3 /development/rf-ip-risklists/rf_risklist_api_names_to_file.py 1> /development/rf-ip-risklists/parsed-ip-risklists/iprisklist_rf_ip_risklist_ips_latest.txt 2> /development/rf-ip-risklists/parsed-ip-risklists/iprisklist_rf_ip_risklist_ips_latest_err_log_$(date +"%Y_%m_%d_%H_%M_%S_%s").log
 # 
 # Run a simple script to convert the IoC's as IP addresses in Base64 and append them to the custom IoC dataset
 # 10 23 * * * 
