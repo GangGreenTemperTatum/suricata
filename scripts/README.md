@@ -48,4 +48,5 @@ apitoken: <put token here>
 
 * Back to the original preferred approach, perform any additional [CRON](https://github.com/GangGreenTemperTatum/suricata/tree/main/cron) tasks, or scripts to encode the data into suitable format that Suricata accepts as a dataset.
 
+Example: [`iterate_rf_ioc_iprisklist_file_base64_encode.sh`](https://github.com/GangGreenTemperTatum/suricata/blob/main/scripts/iterate_rf_ioc_iprisklist_file_base64_encode.sh)
 > Again, see my other scripts and [CRON](https://github.com/GangGreenTemperTatum/suricata/tree/main/cron).
