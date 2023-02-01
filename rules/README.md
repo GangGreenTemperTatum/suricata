@@ -8,3 +8,5 @@
 
 * [Suricata Intellisense](https://marketplace.visualstudio.com/items?itemName=StamusNetworks.suricata-ls)
 * [Suricata Language Server](https://github.com/StamusNetworks/suricata-language-server)
+
+* [Suricatasc](https://manpages.ubuntu.com/manpages/bionic/man1/suricatasc.1.html)
