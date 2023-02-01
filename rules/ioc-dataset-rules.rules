@@ -1,5 +1,28 @@
-########### IoC Dataset Test Rules ############# /etc/suricata/rules/ioc-dataset-rules.rules
-
-#alert dns any any -> any any (msg: "dns list test"; dns.query; to_sha256; dataset:isset,dns-ioc-alert-dataset.sha256; sid:1000003; rev:1;)
-alert dns any any -> any any (msg: "dns list test"; dns.query; dataset:set,dns-ioc-alert-dataset; sid:1000004; rev:1;)
-alert http any any -> any any (msg: "http user-agent test"; http.user_agent; dataset:set,dns-ioc-alert-dataset; sid:1000005; rev:1;)
+############################################ SOF ############################################
+# `to_sha256` transform not required as Suricata will base64-decode the strings from datasets upon initialization
+# alert dns any any -> any any (msg: "dns list test"; dns.query; to_sha256; dataset:isset,dns-ioc-alert-dataset.sha256; sid:1000003; rev:1;)
+################################ DNS RULES | SID 1000004-1000015 ################################
+# alert dns any any -> any any (msg: "IOC DATASET MATCH DNS traffic identified ingress or egress to custom IoC dataset list test"; dns.query; dataset:set,dns-ioc-alert-dataset; dataset:set,rf-ip-ioc-alert-dataset; dataset:set,rf-domain-ioc-alert-dataset; sid:1000004; rev:1; gid:2;)
+alert dns any any -> any any (msg: "IOC DATASET MATCH DNS traffic identified ingress or egress to custom IoC dataset list test"; dns.query; dataset:set,dns-ioc-alert-dataset; sid:1000004; rev:1; gid:2;)
+alert dns any any -> any any (msg: "IOC DATASET MATCH DNS traffic identified ingress or egress to custom IoC dataset list test"; dns.query; dataset:set,rf-ip-ioc-alert-dataset; sid:1000005; rev:1; gid:2;)
+alert dns any any -> any any (msg: "IOC DATASET MATCH DNS traffic identified ingress or egress to custom IoC dataset list test"; dns.query; dataset:set,rf-domain-ioc-alert-dataset; sid:1000006; rev:1; gid:2;)
+#### Testing neverssl.com to identify which rules match based on dataset. Ensure to import www.neverssl.com, base64-encoded into the dataset for a match. ####
+alert dns any any -> any any (msg: "NEVERSSLDOTCOM TEST traffic"; dns.query; content:"neverssl"; nocase; sid:1000007; rev:1; gid:3;)
+################################ EO DNS RULES | SID 1000004-1000015 ################################
+################################ HTTP RULES | SID 1000015-1000025 ################################
+alert http $HOME_NET any -> any any (msg: "http user-agent test"; http.user_agent; content:"curl"; nocase; sid:1000015; rev:1; gid:3;)
+################################ EO HTTP RULES | SID 1000015-1000025 ################################
+################ IP RULES | SID -1000035 ################
+#### Match any bidirectional traffic for IP (any) traffic to custom IoC base64-encoded IP strings datase ####
+# Below rule is incompatible with Suricata rules as Datasets are not supported by the sticky buffer
+# alert ip any any <> any any (msg: "IP IOC DATASET MATCH Traffic identified ingress or egress to custom IoC dataset"; dataset:set,rf-ip-ioc-alert-dataset; priority:4; sid:1000025; rev:1; gid:2;)
+################ EO IP RULES | SID 1000025-1000035 ################
+################################ SSL/TLS RULES | SID 1000035-1000045 ################################
+#### Match any TLS (<v1.3) plain-text SSL handshake negotations where the TLS SNI contains a match from IoC datasets, thus attempting to capture all encrypted protocols for traffic to and from imported IoC's dataset ####
+alert tls $HOME_NET any <> any any (msg: "IOC DATASET MATCH SSL_TLS traffic identified ingress or egress to custom IoC dataset list test"; tls.sni; dataset:set,dns-ioc-alert-dataset; sid:1000025; rev:1; gid:2;)
+alert tls $HOME_NET any <> any any (msg: "IOC DATASET MATCH SSL_TLS traffic identified ingress or egress to custom IoC dataset list test"; tls.sni; dataset:set,rf-ip-ioc-alert-dataset; sid:1000026; rev:1; gid:2;)
+alert tls $HOME_NET any <> any any (msg: "IOC DATASET MATCH SSL_TLS traffic identified ingress or egress to custom IoC dataset list test"; tls.sni; dataset:set,rf-domain-ioc-alert-dataset; sid:1000027; rev:1; gid:2;)
+#### Match for TLS traffic where the TLS certificate has expired ####
+alert tls $HOME_NET any <> any any (msg: "SSL_TLS EXPIRED CERT traffic identified ingress or egress to expired SSL_TLS certs"; tls_cert_expired; sid:1000028; rev:1; gid:3;)
+################################ EO SSL/TLS RULES | SID 1000035-1000045 ################################
+############################################ EOF ############################################
